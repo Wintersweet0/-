@@ -1,8 +1,8 @@
 ### 合约测试
 1. 建立私有链
-mkdir geth_test
-cd geth_test
-//复制创始块，testgenesis3.json，内容  
+mkdir geth_test  
+cd geth_test  
+//复制创始块，testgenesis3.json，内容  `
 {
   "config": {
     "chainId": 91036,
@@ -27,21 +27,21 @@ cd geth_test
   "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "timestamp": "0x00"
-}  
-//初始化：
+}  `
+//初始化：`
 ../go/bin/geth --datadir data init testgenesis.json
 ../go/bin/geth --datadir data --networkid 91036 --nodiscover --rpc --rpcport 8545 --port 30303 console 
-../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 init testgenesis3.json
-//控制台：
-../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 --dev.period 1 console
-//申请账户
+../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 init testgenesis3.json  `
+//控制台：`
+../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 --dev.period 1 console  `
+//申请账户`
 personal.newAccount("123")
 "0x482c46a8de690e361278bfa02fc80d722f0a1e2b"
-eth.getBalance(eth.accounts[0])
+eth.getBalance(eth.accounts[0])  `
 //此时
 余额为0
 2. 账户赋初值
-//退出上面的区块链，在testgenesis3.json中添加已申请账户的信息（修改alloc的内容为新申请的账户名称）
+//退出上面的区块链，在testgenesis3.json中添加已申请账户的信息（修改alloc的内容为新申请的账户名称）`
 {
   "config": {
     "chainId": 91036,
@@ -66,31 +66,31 @@ eth.getBalance(eth.accounts[0])
   "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
   "timestamp": "0x00"
-}
+}`
 //删除data文件夹下面的chaindata和lightchaindata两个文件夹
 //重新执行私有链初始化和启动两条命令
-//初始化
-../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 init testgenesis3.json
-//控制台：
-../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 --dev.period 1 console
-//再次查看账户余额
+//初始化`
+../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 init testgenesis3.json  `
+//控制台：`
+../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --networkid 91036 --dev.period 1 console  `
+//再次查看账户余额`
 eth.getBalance(eth.accounts[0])
-5e+30
+5e+30  `
 3. 部署智能合约
-//建立并进入智能合约文件夹geth_test_truffle
-cd geth_test_truffle
-//truffle初始化
-truffle init
+//建立并进入智能合约文件夹geth_test_truffle  
+cd geth_test_truffle  
+//truffle初始化  
+truffle init  
 //init出错，直接把之前下载过的truffle文件夹复制过来，包括build,contracts,migrations,test四个文件夹和truffle.js,truffle-config.js两个文件
 //配置truffle
 //把contract.sol合约复制到contracts文件夹中
-//migrations文件夹中建立新的文件4_deploy_contract.js，内容为
+//migrations文件夹中建立新的文件4_deploy_contract.js，内容为`
 var Contract = artifacts.require("Contract");
 
 module.exports = function(deployer) {
   deployer.deploy(Contract);
-};
-//修改truffle.js文件，内容如下
+};`
+//修改truffle.js文件，内容如下`
 module.exports = {
   networks: {
     development: {
@@ -99,50 +99,50 @@ module.exports = {
       network_id: "91036" // Match any network id
     }
   }
-};
-//编译合约
-truffle compile
-//提示错误
+};`
+//编译合约  
+truffle compile  
+//提示错误`
 SyntaxError: Source file requires different compiler version (current compiler is 0.4.18+commit.9cf6e910.Emscripten.clang - note that nightly builds are considered to be strictly less than the released version
 pragma solidity ^0.4.21;
 ^----------------------^
-Compilation failed. See above.
+Compilation failed. See above.`
 //说明合约中的solidity版本比系统中部署的版本高，无法编译
 //修改合约中的solidity版本号为0.4.18
 //再次编译，成功
-//提示警告
+//提示警告`
 Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
     function getQuality(string uuid) public constant returns (int) {
-                        ^---------^
+                        ^---------^`
 //说明合约中有未使用的部分，不影响
-//账户解锁
-personal.unlockAccount(eth.accounts[0],"123")
-//提示错误
-GoError: Error: account unlock with HTTP access is forbidden at web3.js:6347:37(47)
+//账户解锁`
+personal.unlockAccount(eth.accounts[0],"123")`
+//提示错误`
+GoError: Error: account unlock with HTTP access is forbidden at web3.js:6347:37(47)`
 //原因：新版本geth，出于安全考虑，默认禁止了HTTP通道解锁账户。
-//解决方法：可通启动命令中添加参数：
---allow-insecure-unlock
-//重启私有链
-../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --allow-insecure-unlock --networkid 91036 --dev.period 1 console
-//再次解锁账户
-personal.unlockAccount(eth.accounts[0],"123")
+//解决方法：可通启动命令中添加参数：  `
+--allow-insecure-unlock`
+//重启私有链  `
+../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --allow-insecure-unlock --networkid 91036 --dev.period 1 console`
+//再次解锁账户  `
+personal.unlockAccount(eth.accounts[0],"123")`
 true
-//部署合约
-truffle migration
-//出现错误
-Error: exceeds block gas limit
-//解决方法：修改testgenesis3.json中的"gasLimit": "0x2fefd8",改为"gasLimit": "0xffffff"
-//重新init，启动区块链
-//再次部署合约
-miner.start(4);admin.sleepBlocks(1);miner.stop();
-//挖矿一直不成功，都没有进入DAG状态
-//办法1：设置接收挖矿奖励的以太坊账号
+//部署合约  `
+truffle migration`
+//出现错误  `
+Error: exceeds block gas limit`
+//解决方法：修改testgenesis3.json中的"gasLimit": "0x2fefd8",改为"gasLimit": "0xffffff"  
+//重新init，启动区块链  
+//再次部署合约  `
+miner.start(4);admin.sleepBlocks(1);miner.stop();`  
+//挖矿一直不成功，都没有进入DAG状态  
+//办法1：设置接收挖矿奖励的以太坊账号  `
  miner.setEtherbase(eth.coinbase)
-true
-//再次挖矿，还是刚才的状态
-//办法2：降低挖矿难度，在testgenesis3.json中修改"difficulty"
-"difficulty": "0x20"
-//重新init,启动区块链
+true`  
+//再次挖矿，还是刚才的状态  
+//办法2：降低挖矿难度，在testgenesis3.json中修改"difficulty"  
+"difficulty": "0x20"  
+//重新init,启动区块链  
 ../go/bin/geth --identity "MyEth" init testgenesis3.json
 ../go/bin/geth --identity "MyEth" --rpc --rpcport "8545" --rpccorsdomain "*" --datadir data --port "30303" --nodiscover --rpcapi "db,eth,net,personal,web3" --allow-insecure-unlock --networkid 91036 --dev.period 1 console
 //`````````````````````````````````````````````````````````
@@ -162,13 +162,13 @@ personal.unlockAccount(eth.accounts[0], "123", 200000)
 miner.start();admin.sleepBlocks(1);miner.stop();
 eth.getBalance(eth.accounts[0])
 4. testrpc部署合约
-由于电脑问题，一直无法正常启动挖矿，所以在testrpc下测试合约
- 1. 输入testrpc，出现10个账户
- 2. 进入truffle文件夹，部署合约
- 3. 合约地址：0x1aa9db87c0f7e8939b767e18a4d4aa36bb50c329
- 4. 连接网页端
+由于电脑问题，一直无法正常启动挖矿，所以在testrpc下测试合约  
+ 1. 输入testrpc，出现10个账户  
+ 2. 进入truffle文件夹，部署合约  
+ 3. 合约地址：0x1aa9db87c0f7e8939b767e18a4d4aa36bb50c329  
+ 4. 连接网页端  
 ### 源码运行1
-1. 点击顺序
+1. 点击顺序  
 traffic.html在浏览器中打开后，需要按照如下顺序先初始化：initMap->initTrace->initContract
 2. 测试testMatch
 出现错误：Uncaught TypeError: Cannot read property 'length' of undefined
