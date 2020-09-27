@@ -201,7 +201,8 @@ traffic.html在浏览器中打开后，需要按照如下顺序先初始化：in
 >>/home/ubuntu/geth_test/geth_test_truffle/contracts/contract.sol:93:45: ParserError: The state mutability modifier "constant" was removed in version 0.5.0. Use "view" or "pure" instead.  
 >>function getQuality(string uuid) public constant returns (int) {  
                                             ^------^  
->>根据提示将“constant”更换为“view”或者“pure”。  
+>>根据提示将“constant”更换为“view”或者“pure”  
+    
 >错误2：  
 >>/home/ubuntu/geth_test/geth_test_truffle/contracts/contract.sol:23:22: TypeError: Data location must be "memory" for parameter in function, but none was given.  
 >>在用truffle编译智能合约时，报错 TypeError: Data location must be "memory" for return parameter in function, but none was given.这是由于solidity 0.5.0版本的更新导致的，只需要在address[16]后面加上memory就可以了。（在string之后加）  
