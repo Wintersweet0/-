@@ -554,7 +554,8 @@ function getQuality() {
 	trafficContract.methods.getQuality(userId).call(function(error, result){
         if(!error) {
         	nowQua = result;
-            console.log("now quality : ", nowQua);
+            	console.log("now quality : ", nowQua);
+		$("#value").html('信誉:' + nowQua);
         } else
             console.error(error);
     });	
@@ -590,7 +591,6 @@ function calcNext() {
 		quality = 100;
 	}
 
-	$("#value").html('信誉:' + quality);
 	console.log(nowCalc, quality);//“结果整理2”的html中输出的两个数
 	getQuality();
 	nowCalc = nowCalc + 1;
