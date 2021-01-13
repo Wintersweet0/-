@@ -489,18 +489,7 @@ function initTrace() {
 	nowCalc = 0;
 }
 
-function testMatch() {
-	for (var i = 0; i < 50; i++) {
-		calcNext();
-		// sleep(10);
-	}
-}
 
-function matchAll() {
-	for (var i = 0; i < 200; i++) {
-		calcNext();
-	}
-}
 // 初始化地图，把road的相关信息写到roadsBuffer里
 function initMap() {
 	var tempsum = 0;
@@ -549,9 +538,9 @@ function upload(index) {
 	trafficContract.methods.setSinglePos(userId, locTime[index], latOri, lonOri, latFix, lonFix).send({from: trafficContractAccount, gas: 500000});
 }
 
-function getQuality() {
+async function getQuality() {
 	var nowQua;
-	trafficContract.methods.getQuality(userId).call(function(error, result){
+	await trafficContract.methods.getQuality(userId).call(function(error, result){
         if(!error) {
         	nowQua = result;
             	console.log("now quality : ", nowQua);
@@ -560,8 +549,20 @@ function getQuality() {
             console.error(error);
     });	
 }
+	
+async function testMatch() {
+	for (var i = 0; i < 50; i++) {
+		await calcNext();
+	}
+}
 
-function calcNext() {
+async function matchAll() {
+	for (var i = 0; i < 200; i++) {
+		await calcNext();
+	}
+}
+
+async function calcNext() {
 	var geohash = locBuffer[nowCalc];
 	var range = decode_geohash(geohash);
 	var midLat = (range[2] + range[3]) / 2;
@@ -592,7 +593,7 @@ function calcNext() {
 	}
 
 	console.log(nowCalc, quality);//“结果整理2”的html中输出的两个数
-	getQuality();
+	await getQuality();
 	nowCalc = nowCalc + 1;
 }
 
