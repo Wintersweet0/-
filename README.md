@@ -69,16 +69,16 @@
 > <script src="./mycontract.js"></script>源代码中引用的这个文件并不存在，不确定是否对功能有影响  
 > 测试getQuality，页面上的信誉值不会改变，开发者模式下显示now quality :  0，这个按钮的功能可能出现了问题？  
 
-###毕设待解决的问题与解决现状：  
+### 毕设待解决的问题与解决现状：  
 1. 初始地图的加载比较慢，需要考虑浏览器缓存的利用；  
-这个问题目前还没着手解决  
+>这个问题目前还没着手解决  
 2. 计算信誉度时，没有轨迹显示；需要解决并发执行的问题；  
-已解决，相关修改代码的链接https://github.com/Wintersweet0/cjz-replay-lwq-graduatedesign/commit/201a4f3cfad0604334a94da10b00deb38f234ee5  
+>已解决，相关修改代码的链接https://github.com/Wintersweet0/cjz-replay-lwq-graduatedesign/commit/201a4f3cfad0604334a94da10b00deb38f234ee5  
 3. 演示过程中出现错误（合约需要使用的账号信息需要写死到程序中），需要解决；  
-已解决，每次部署区块链和合约需要修改前端源代码的trafficContract account和address    
+>已解决，每次部署区块链和合约需要修改前端源代码的trafficContract account和address    
 4. 信誉值的计算还有问题：与合约的交互还有问题，计算出来的信誉值也有问题；  
-信誉值计算目前可以正常进行，待优化  
+>信誉值计算目前可以正常进行，待优化  
 5. 程序很不稳定，合理的结果并不总是会出现；  
-待优化  
+>待优化  
 6. 代码和文档：代码只在本地有保存，后续同步到自己的仓库中；把石墨中的文档同步到仓库中；  
-已解决  
+>已解决  
