@@ -1,3 +1,4 @@
+创建私有链参考链接：https://github.com/Wintersweet0/undergraduate-lwqi2020/edit/master/%E6%96%87%E6%A1%A3/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%8E%B0%E6%83%85%E5%86%B5.md
 在testrpc下测试合约  
  1. 输入testrpc，出现10个账户  
  2. 进入truffle文件夹，部署合约  
