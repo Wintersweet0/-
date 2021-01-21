@@ -15,10 +15,9 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<!-- 链接外部样式表 -->
-	<link rel="stylesheet" type="text/css" href="main.css">
-	<!-- leaflet所需文件-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
 	<link rel="stylesheet" href="leaflet.css" />
 	<link rel="stylesheet" href="leaflet.label.css" />
 	<script src="leaflet-src.js"></script>
@@ -26,21 +25,15 @@
 	<script src="leaflet.label-src.js"></script>
 	<script src="leaflet.label.js"></script>
 	<script src="OSMBuildings-Leaflet.debug.js"></script>
-	<!-- 以上是leaflet所需文件 -->
 
-	<script src="./node_modules/web3/dist/web3.min.js"></script>
-	<!-- 一些geohash函数 -->
-	<script src="./geohash.js"></script>
-	<!-- 一些geohash函数主要是几何计算 -->
-	<script src="./geolib.js"></script>
-	<!-- 一些其他函数 -->
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+    <script src="./geohash.js"></script>
+    <script src="./geolib.js"></script>
     <script src="./common.js"></script>
     <script src="./mycontract.js"></script>
-	<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
 	<script src="https://s3.pstatp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js"></script>
-	<!-- 轨迹数组 -->
+
 	<script src="./gpsarray.js"></script>
-	<!-- 地图数组 -->
 	<script src="./waysall.js"></script>
 
 
@@ -54,14 +47,129 @@ var mapContractServer = '';
 var mapContract;
 
 //Traffic contract
-var trafficContractAccount = '0xfb33b76329991b58Ee82cc3D9664F90f080aE84C'; 
-var trafficContractAbi = [{"constant":true,"inputs":[{"name":"uuid","type":"string"}],"name":"getQuality","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"uuid","type":"string"},{"name":"time","type":"uint256"},{"name":"_latOri","type":"uint256"},{"name":"_lonOri","type":"uint256"},{"name":"_latFix","type":"uint256"},{"name":"_lonFix","type":"uint256"}],"name":"setSinglePos","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"uuid","type":"string"}],"name":"getSinglePos","outputs":[{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"uuid","type":"string"}],"name":"revalue","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}];
-var trafficContractAddress = '0xEB1Bf08E713CC8Ef8771AA6026482D3874A7b676';
+var trafficContractAccount = '0xc81E9d96F3315fe1a3076e002D852D74f53b867d'; 
+var trafficContractAbi = [{
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uuid",
+          "type": "string"
+        }
+      ],
+      "name": "revalue",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uuid",
+          "type": "string"
+        }
+      ],
+      "name": "getQuality",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uuid",
+          "type": "string"
+        }
+      ],
+      "name": "getSinglePos",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "uuid",
+          "type": "string"
+        },
+        {
+          "internalType": "uint256",
+          "name": "time",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_latOri",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_lonOri",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_latFix",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_lonFix",
+          "type": "uint256"
+        }
+      ],
+      "name": "setSinglePos",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }];
+var trafficContractAddress = '0x634b4cC679f4526BaFbd72aD1FBafD6763a3CaBb';
 var trafficContractServer = 'http://localhost:8545';
 var trafficContract;
 
-// 创建一个web3的实例，设置一个provider。为了保证不会覆盖一个已有的provider，比如使用Mist时有内置，需要先检查是否web3实例已存在。
-//Contract Init  初始化trafficContract
+//Contract Init
 function initContract() {
 	if (typeof web3 !== 'undefined') {
 	    //var web3Map = new Web3(web3.currentProvider);
@@ -70,9 +178,9 @@ function initContract() {
 	    //var web3Map = new Web3(new Web3.providers.HttpProvider(mapContractServer));
 	    var web3Traffic = new Web3(new Web3.providers.HttpProvider(trafficContractServer));
 	}
-	// 这允许您与智能合约进行交互，就像它们是JavaScript对象一样。
 	//mapContract = new web3Map.eth.Contract(mapContractAbi,mapContractAddress);
 	trafficContract = new web3Traffic.eth.Contract(trafficContractAbi,trafficContractAddress);
+	console.log("OK!");
 }
 
 //user id
@@ -84,7 +192,6 @@ if(!window.localStorage){
     alert('This browser does NOT support localStorage');
 }
 if (!localStorage.getItem("uuid")){
-	// common.js文件里定义，功能是生成全局唯一标识符
     userId = generateUUID();
     localStorage.setItem("uuid",userId);
 }
@@ -93,7 +200,7 @@ else{
 }
 console.log(userId);
 
-//road buffer 定义道路缓存
+//road buffer
 var roadsBuffer = [];
 var roadsGeoBuffer = [];
 var geo2index = {};
@@ -103,41 +210,41 @@ var bufferEnd = 0;
 //map
 var map;
 
-// function getRoads(geohash) {
-// 	if (geohash in geo2index) {
-// 		return Promise.resolve(roadsBuffer[geo2index[geohash]]);
-// 	}
+function getRoads(geohash) {
+	if (geohash in geo2index) {
+		return Promise.resolve(roadsBuffer[geo2index[geohash]]);
+	}
 
-// 	var roads = new Array();
-// 	return mapContract.methods.getRoads(geohash).call(function(error, result){
-//                 if(!error) {
-//                     console.log(result);
-//                     var roadInfo = result[0];
-//                     var roadName = result[1];
-//                     var roadPath = result[2];
+	var roads = new Array();
+	return mapContract.methods.getRoads(geohash).call(function(error, result){
+                if(!error) {
+                    console.log(result);
+                    var roadInfo = result[0];
+                    var roadName = result[1];
+                    var roadPath = result[2];
 
-//                     var pointer = 0;
-//                     for (var i = 0; i < roadName.length; i++){
+                    var pointer = 0;
+                    for (var i = 0; i < roadName.length; i++){
 
-//                     }
+                    }
 
-//                     if (bufferNum == bufferMax) {
-//                     	delete geo2index[roadsGeoBuffer[bufferEnd]];
-//                     	bufferNum--;
-//                     }
-//                     roadsGeoBuffer[bufferEnd] = geohash;
-//                     roadsBuffer[bufferEnd] = roads;
-//                     geo2index[geohash] = bufferEnd;
-//                     bufferEnd++;
-//                     bufferNum++;
-//                     if (bufferEnd == bufferMax) {
-//                     	bufferEnd = 0;
-//                     }
-//                     return roads;
-//                 } else
-//                     console.error(error);
-//             });	
-// }
+                    if (bufferNum == bufferMax) {
+                    	delete geo2index[roadsGeoBuffer[bufferEnd]];
+                    	bufferNum--;
+                    }
+                    roadsGeoBuffer[bufferEnd] = geohash;
+                    roadsBuffer[bufferEnd] = roads;
+                    geo2index[geohash] = bufferEnd;
+                    bufferEnd++;
+                    bufferNum++;
+                    if (bufferEnd == bufferMax) {
+                    	bufferEnd = 0;
+                    }
+                    return roads;
+                } else
+                    console.error(error);
+            });	
+}
 
 //location buffer
 var locBuffer = [];
@@ -168,26 +275,26 @@ var n;
 var nowCalc;
 var roadNum;
 var quality = 0;
-// 获取经纬度
+
 function getLocation() {
-    if (navigator.geolocation) {
+    if (navigator.geolocation) { 
         navigator.geolocation.getCurrentPosition(showPosition);
     }
 }
-// 和上面是一套的
+
 function showPosition(position) {
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
     console.log(position.coords.latitude);
     console.log(position.coords.longitude);
 }
-//获取时间
+
 function getTime() {
     var t_date = new Date();
     var t_time = t_date.getTime();            
     return t_time;
 }
-//这是啥意思？
+
 function compareTheta(a1, a2, b1, b2) {
 	return 0;
 }
@@ -195,7 +302,7 @@ function compareTheta(a1, a2, b1, b2) {
 function compareOneway(a1, a2, b1, b2) {
 	return 1;
 }
-//判断当前道路是否匹配
+
 function isRoute(road1, road2) {
 	if(road1.gid == road2.gid){
 		return true;
@@ -233,10 +340,10 @@ function isRoute(road1, road2) {
 
 	return false;	
 }
-//这个函数在“结果整理”里使用了，在“undergraduate”使用的是第一个
+
 function getBestMatch2(index, candidates) {
 	candidates.sort(function (a, b) {
-		return b[2] - a[2];//从大到小排列
+		return b[2] - a[2];
 	})
 	var candidateIndex = -1;
 
@@ -264,7 +371,7 @@ function getBestMatch2(index, candidates) {
 }
 
 function getBestMatch(index, candidates) {
-	var prepos;//这里好像是个错误，后面用的全是propos
+	var prepos;
 	if (index == 0) {
 		propos = locBuffer[index];
 	} else {
@@ -272,11 +379,11 @@ function getBestMatch(index, candidates) {
 	}
 
 	for (var i = 0; i < candidates.length; i++) {
-		var evaluate = candidates[i][1][0] + 0.1;//candidates.push([road, result, prop])，这里用的是getDispointToRoad
+		var evaluate = candidates[i][1][0] + 0.1;
 		road = candidates[i][0];
 		
 		//投影在外面
-		if (candidates[i][1][2][1] > 0) {//大于零说明投影在外面，result=return [min, which, res]，res是点到road的距离
+		if (candidates[i][1][2][1] > 0) {
 			evaluate = evaluate * 1.5;
 		}
 		//夹角
@@ -299,39 +406,38 @@ function getBestMatch(index, candidates) {
 			evaluate = evaluate * 0.7;
 		}
 
-		candidates[i].push(range / evaluate);//evaluate越小越匹配
+		candidates[i].push(range / evaluate);
 	}
 
 	candidates.sort(function (a, b) {
-		return (b[2] - a[2]);//从大到小
+		return (b[2] - a[2]);
 	});
 
-	return candidates[0];//返回范围内可能的路段里最符合的那 一个 路段
+	return candidates[0];
 }
 
-function projection(index, road) {//投影
+function projection(index, road) {
 	var fixed;
 	//console.log("fixed road ", road);
 	var distance = 0;
-	if (road[1][2][1] == 0) {//表明投影点在线段上，road=[road, result, prop],result=return [min, which, res],res是点到segment的距离
-		//获得buffer在道路段上的投影点fixed的geohash
+	if (road[1][2][1] == 0) {
 		fixed = getProjection(road[0].path[road[1][1]], road[0].path[road[1][1] + 1], locBuffer[index]);
 		distance = getDistanceByGeohash(fixed, road[0].path[road[1][1]]);
 	} else {
-		if (road[1][2][1] == 1) {//投影点不在线段上，在线段后方|.
-			fixed = road[0].path[road[1][1]];//修正点在线段的起点
-			distance = 0;//distance指修正点距线段起点的距离
-		} else {//投影点不在线段上，在线段前方|'
-			fixed = road[0].path[road[1][1] + 1];//修正点在线段的终点
-			distance = getDistanceByGeohash(road[0].path[road[1][1]], road[0].path[road[1][1] + 1]);//distance指修正点距线段起点的距离
+		if (road[1][2][1] == 1) {
+			fixed = road[0].path[road[1][1]];
+			distance = 0;
+		} else {
+			fixed = road[0].path[road[1][1] + 1];
+			distance = getDistanceByGeohash(road[0].path[road[1][1]], road[0].path[road[1][1] + 1]);
 		}
 	}
 
 	var offset = 0;
 	var total = 0;
 	for (var i = 0; i < road[0].path.length - 1; i++) {
-		var temp = getDistanceByGeohash(road[0].path[i], road[0].path[i + 1]);//temp计算每个path之间路段的长度
-		total = total + temp;//计算这整个gid路段的长度
+		var temp = getDistanceByGeohash(road[0].path[i], road[0].path[i + 1]);
+		total = total + temp;
 		if (i < road[1][1]) {
 			distance = distance + temp;
 		}
@@ -372,7 +478,7 @@ function getDisPointToRoad(road, point) {
 			res = disRes;
 		}
 	}
-	return [min, which, res];//返回点到road的每一个path段距离的最小值和这个path的位置
+	return [min, which, res];
 }
 
 function rangeFilter(roads, index) {
@@ -393,7 +499,7 @@ function rangeFilter(roads, index) {
 				if ((index == 0) || 
 					(locBufferDirection[index - 1] == 1) && (locBufferType[index - 1] == 2) ||
 					(locBufferDirection[index - 1] == 0) && (locBufferType[index - 1] == 1)) {
-					prop = range / (c * result[0] * 0.5 + 0.1);//这是在计算啥？
+					prop = range / (c * result[0] * 0.5 + 0.1);
 				} else {
 					prop = range / (c * result[0] * 1.5 + 0.1);
 				}
@@ -412,10 +518,10 @@ function getCandidates(index) {
 	var candidates = [];
 	//console.log(roadsBuffer.length);
 	for (var i = 0; i < roadsBuffer.length; i++) {
-		candidates.push(roadsBuffer[i]);//这里的candidates代表所有路段
+		candidates.push(roadsBuffer[i]);
 	}
-	candidates = removeDuplicate(candidates);//这一步的函数没功能
-	candidates = rangeFilter(candidates, index);//筛选range范围内的道路并给candidates加一些元素
+	candidates = removeDuplicate(candidates);
+	candidates = rangeFilter(candidates, index);
 	return candidates;
 }
 
@@ -428,10 +534,10 @@ function match(index) {
 	//console.log(candidates);
 	if (candidates.length > 0) {
 		//var road = getBestMatch(index, candidates);
-		var road = getBestMatch2(index, candidates);//找到与当前节点最符合的路段
+		var road = getBestMatch2(index, candidates);
 		//console.log("road ", road);
 		if (typeof(road) != "undefined") {
-			currentRoad = road[0];//road=[road, result, prop],其中road[0]就是roadsbuffer
+			currentRoad = road[0];
 			currentGid = road[0].gid;
 			locBufferGid[index] = road[0].gid;
 			fixed = projection(index, road);
@@ -464,7 +570,7 @@ function initTrace() {
 	minlat = 180;
 	maxlon = 0;
 	minlon = 180;
-	n = locationarray.length;//locationarray在jpsarray里
+	n = locationarray.length;
 	for (var i = 0; i < n; i++) {
 		locBuffer.push(encode_geohash(locationarray[i][2],locationarray[i][1]));
 		locTime.push(locationarray[i][0]);
@@ -489,8 +595,6 @@ function initTrace() {
 	nowCalc = 0;
 }
 
-
-// 初始化地图，把road的相关信息写到roadsBuffer里
 function initMap() {
 	var tempsum = 0;
 	roadNum = initialways.length;
@@ -510,7 +614,7 @@ function initMap() {
 		//console.log(pointArray);
 		for (var j = 0; j < pointArray.length; j = j + 1) {
 			var point = pointArray[j].split(" ");
-			path.push(encode_geohash(parseFloat(point[0]), parseFloat(point[1])));//parseFloat返回第一个浮点数
+			path.push(encode_geohash(parseFloat(point[0]), parseFloat(point[1])));
 			if ((point[0] <= maxlon) && (point[0] >= minlon) && 
 				(point[1] <= maxlat) && (point[1] >= minlat) &&
 				(flag == 0)) {
@@ -518,7 +622,7 @@ function initMap() {
 				flag = 1;
 			}
 		}
-		nowRoad.path = path;//path是一个geohash点的集合
+		nowRoad.path = path;
 		if (flag == 1) {
 			roadsBuffer.push(nowRoad);
 			bufferNum++;
@@ -529,7 +633,7 @@ function initMap() {
 	//console.log(tempsum);
 	console.log(roadsBuffer.length);
 }
-//把当前节点的信息更新到智能合约里
+
 function upload(index) {
 	var latOri = getLatBase32(locBuffer[index]);
 	var lonOri = getLonBase32(locBuffer[index]);
@@ -541,17 +645,17 @@ function upload(index) {
 async function getQuality() {
 	var nowQua;
 	await trafficContract.methods.getQuality(userId).call(function(error, result){
-        if(!error) {
-        	nowQua = result;
-            	console.log("now quality : ", nowQua);
-		$("#value").html('信誉:' + nowQua);
-        } else
-            console.error(error);
-    });	
+		if(!error) {
+			nowQua = result;
+            $("#value").html('信誉:' + nowQua);
+			console.log(nowCalc, nowQua);
+        	} else
+		console.error(error);
+	});
 }
-	
+
 async function testMatch() {
-	for (var i = 0; i < 50; i++) {
+	for (let i = 0; i < 10; i++) {
 		await calcNext();
 	}
 }
@@ -576,25 +680,25 @@ async function calcNext() {
 	//console.log("test", locBufferFix[nowCalc]);
 	var range = decode_geohash(locBufferFix[nowCalc]);
 	var midLat = (range[2] + range[3]) / 2;
-	var midLon = (range[0] + range[1]) / 2;
+	var midLon = (range[0] + range[1]) / 2;		
 	var point = L.circle([midLat,midLon],3,{color:'#00FF00',fillColor:'#00FF00',fillOpacity:1});
 	map.addLayer(point);		
-
-	//upload(nowCalc);
+	
+	upload(nowCalc);
 
 	if (getDistanceByGeohash(locBufferFix[nowCalc], locBuffer[nowCalc]) < 0.8) {
-		quality++;//前端的quality算法从0开始加，不会减少或清零
-	}
+		quality++;
+	} 
 	if (nowCalc % 20 == 19) {
 		quality++;
 	}
 	if (quality > 100) {
 		quality = 100;
 	}
-
-	console.log(nowCalc, quality);//“结果整理2”的html中输出的两个数
 	await getQuality();
+	//console.log(nowCalc, quality);//“结果整理2”的html中输出的两个数
 	nowCalc = nowCalc + 1;
+	
 }
 
 function sleep(delay) {
